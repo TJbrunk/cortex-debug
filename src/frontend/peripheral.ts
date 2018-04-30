@@ -1071,7 +1071,7 @@ export class PeripheralTreeProvider implements vscode.TreeDataProvider<TreeNode>
             }
         }
         else if (!this.loaded) {
-            return [new TreeNode('No SVD File Loaded', vscode.TreeItemCollapsibleState.None, 'message', null)];
+            return [new TreeNode('No SVD file loaded (www.keil.com/dd2/)', vscode.TreeItemCollapsibleState.None, 'message', null)];
         }
         else {
             return [];
