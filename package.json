@@ -20,7 +20,7 @@
                         "null"
                     ],
                     "default": null,
-                    "description": "Path to the GCC Arm Toolchain (prefix arm-none-eabi) to use. If not set the tools must be on the system path. Do not include the executable file name in this path."
+                    "description": "Path to the GCC Arm Toolchain FOLDER (prefix arm-none-eabi) to use. If not set the tools must be on the system path. Do not include the executable file name in this path."
                 },
                 "cortex-debug.JLinkGDBServerPath": {
                     "type": [
@@ -84,11 +84,15 @@
             },
             {
                 "command": "cortex-debug.peripherals.setFormat",
-                "title": "Set Value Format"
+                "title": "Set Display Format (0x, 0b,...)"
+            },
+            {
+                "command": "cortex-debug.peripherals.examineMemory",
+                "title": "Show in Memory Viewer"
             },
             {
                 "command": "cortex-debug.registers.setFormat",
-                "title": "Set Value Format"
+                "title": "Set Display Format (0x, 0b,...)"
             },
             {
                 "category": "Cortex-Debug",
@@ -1117,7 +1121,9 @@
                             "name": "${6:Debug Microcontroller}",
                             "request": "launch",
                             "type": "cortex-debug",
-                            "servertype": "jlink"
+                            "servertype": "jlink",
+                            "svdFile": "Download from http://www.keil.com/dd2/",
+                            "device": "<device for JLINK connection>"
                         },
                         "description": "Debugs an embedded ARM Cortex-M microcontroller using GDB + JLink",
                         "label": "Cortex Debug: JLink"
@@ -1171,11 +1177,11 @@
                 },
                 "initialConfigurations": [
                     {
+                        "request": "launch",
+                        "type": "cortex-debug",
                         "name": "Cortex Debug",
                         "cwd": "${workspaceRoot}",
                         "executable": "./bin/executable.elf",
-                        "request": "launch",
-                        "type": "cortex-debug",
                         "servertype": "jlink"
                     }
                 ],
@@ -1325,6 +1331,10 @@
                 {
                     "command": "cortex-debug.setForceDisassembly",
                     "when": "debugType == cortex-debug"
+                },
+                {
+                    "command": "cortex-debug.peripherals.examineMemory",
+                    "when": "debugType == cortex-debug"
                 }
             ],
             "view/item/context": [
@@ -1367,6 +1377,10 @@
                 {
                     "command": "cortex-debug.registers.setFormat",
                     "when": "view == cortex-debug.registers"
+                },
+                {
+                    "command": "cortex-debug.peripherals.examineMemory",
+                    "when": "view == cortex-debug.peripherals"
                 }
             ],
             "view/title": []
@@ -1415,7 +1429,7 @@
         "mocha": "^3.2.0",
         "tslint": "^5.9.1",
         "typescript": "^2.1.6",
-        "vscode": "^1.0.0"
+        "vscode": "^1.1.16"
     },
     "displayName": "Cortex-Debug",
     "engines": {
